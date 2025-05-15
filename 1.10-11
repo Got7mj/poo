@@ -1,0 +1,95 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  MaterialApp app = MaterialApp(
+    theme: ThemeData(useMaterial3: false, primarySwatch: Colors.yellow),
+    home: Scaffold(
+      appBar: AppBar(title: Text("Cervejas")),
+      body: SingleChildScrollView(
+        child: DataTable(
+          columns: [
+            DataColumn(label: Text("Nome")),
+            DataColumn(label: Text("Estilo")),
+            DataColumn(label: Text("IBU")),
+          ],
+          rows: [
+            DataRow(cells: [
+              DataCell(Text("La Fin Du Monde")),
+              DataCell(Text("Bock")),
+              DataCell(Text("65")),
+            ]),
+            DataRow(cells: [
+              DataCell(Text("Sapporo Premium")),
+              DataCell(Text("Sour Ale")),
+              DataCell(Text("54")),
+            ]),
+            DataRow(cells: [
+              DataCell(Text("Duvel")),
+              DataCell(Text("Pilsner")),
+              DataCell(Text("82")),
+            ]),
+            DataRow(cells: [
+              DataCell(Text("Heineken")),
+              DataCell(Text("Lager")),
+              DataCell(Text("23")),
+            ]),
+            DataRow(cells: [
+              DataCell(Text("Guinness")),
+              DataCell(Text("Stout")),
+              DataCell(Text("45")),
+            ]),
+            DataRow(cells: [
+              DataCell(Text("Corona Extra")),
+              DataCell(Text("Pale Lager")),
+              DataCell(Text("19")),
+            ]),
+            DataRow(cells: [
+              DataCell(Text("Chimay Blue")),
+              DataCell(Text("Belgian Strong Ale")),
+              DataCell(Text("90")),
+            ]),
+            DataRow(cells: [
+              DataCell(Text("Budweiser")),
+              DataCell(Text("Lager")),
+              DataCell(Text("12")),
+            ]),
+            DataRow(cells: [
+              DataCell(Text("Brooklyn East IPA")),
+              DataCell(Text("IPA")),
+              DataCell(Text("60")),
+            ]),
+            DataRow(cells: [
+              DataCell(Text("Delirium Tremens")),
+              DataCell(Text("Belgian Ale")),
+              DataCell(Text("80")),
+            ]),
+            DataRow(cells: [
+              DataCell(Text("Stone IPA")),
+              DataCell(Text("IPA")),
+              DataCell(Text("77")),
+            ]),
+            DataRow(cells: [
+              DataCell(Text("Samuel Adams")),
+              DataCell(Text("Amber Lager")),
+              DataCell(Text("30")),
+            ]),
+            DataRow(cells: [
+              DataCell(Text("Hoegaarden")),
+              DataCell(Text("Witbier")),
+              DataCell(Text("15")),
+            ]),
+            DataRow(cells: [
+              DataCell(Text("Leffe Blonde")),
+              DataCell(Text("Belgian Blonde Ale")),
+              DataCell(Text("26")),
+            ]),
+            DataRow(cells: [
+              DataCell(Text("Skol")),
+              DataCell(Text("Pilsen")),
+              DataCell(Text("10")),
+            ]),
+          ],
+        ))));
+
+  runApp(app);
+}
