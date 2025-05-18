@@ -1,0 +1,94 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Cervejas com Detalhes',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: MyHomePage(),
+    );
+  }
+}
+
+class MyHomePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Cervejas com Detalhes'),
+      ),
+      body: ListView(
+        children: [
+          ExpansionTile(
+            title: Text("La Fin Du Monde"),
+            leading: Icon(Icons.local_drink),
+            children: [
+              ListTile(
+                title: Text("Estilo: Bock"),
+                subtitle: Text("IBU: 65"),
+              ),
+            ],
+          ),
+          ExpansionTile(
+            title: Text("Sapporo Premium"),
+            leading: Icon(Icons.local_drink),
+            children: [
+              ListTile(
+                title: Text("Estilo: Sour Ale"),
+                subtitle: Text("IBU: 54"),
+              ),
+            ],
+          ),
+          ExpansionTile(
+            title: Text("Duvel"),
+            leading: Icon(Icons.local_drink),
+            children: [
+              ListTile(
+                title: Text("Estilo: Pilsner"),
+                subtitle: Text("IBU: 82"),
+              ),
+            ],
+          ),
+          // Adicionando mais cervejas
+          ExpansionTile(
+            title: Text("Heineken"),
+            leading: Icon(Icons.local_drink),
+            children: [
+              ListTile(
+                title: Text("Estilo: Lager"),
+                subtitle: Text("IBU: 23"),
+              ),
+            ],
+          ),
+          ExpansionTile(
+            title: Text("Guinness"),
+            leading: Icon(Icons.local_drink),
+            children: [
+              ListTile(
+                title: Text("Estilo: Stout"),
+                subtitle: Text("IBU: 45"),
+              ),
+            ],
+          ),
+          ExpansionTile(
+            title: Text("Corona Extra"),
+            leading: Icon(Icons.local_drink),
+            children: [
+              ListTile(
+                title: Text("Estilo: Pale Lager"),
+                subtitle: Text("IBU: 19"),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
