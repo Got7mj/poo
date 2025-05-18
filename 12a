@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+zimport 'package:flutter/material.dart';
 
 void main() {
   runApp(MyApp());
@@ -25,50 +25,70 @@ class MyHomePage extends StatelessWidget {
       body: ListView(
         children: [
           ExpansionTile(
-            title: Text("La Fin Du Monde"),
-            subtitle: Text("Beer"),
+            title: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("La Fin Du Monde"),
+                Text("Beer"),
+              ],
+            ),
             children: [
               ListTile(
-                title: Text("12% alc"),
+                title: Text("Teor Alcoólico: 12%"),
               ),
               ListTile(
-                title: Text("Country: Canadá"),
+                title: Text("País: Canadá"),
               ),
             ],
           ),
           ExpansionTile(
-            title: Text("Sapporo Premium"),
-            subtitle: Text("Beer"),
+            title: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("Sapporo Premium"),
+                Text("Beer"),
+              ],
+            ),
             children: [
               ListTile(
-                title: Text("15% alc"),
+                title: Text("Teor Alcoólico: 15%"),
               ),
               ListTile(
-                title: Text("Country: Japão"),
+                title: Text("País: Japão"),
               ),
             ],
           ),
           ExpansionTile(
-            title: Text("Partridge Reserva"),
-            subtitle: Text("Wine"),
+            title: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("Partridge Reserva"),
+                Text("Wine"),
+              ],
+            ),
             children: [
               ListTile(
-                title: Text("14% alc"),
+                title: Text("Teor Alcoólico: 14%"),
               ),
               ListTile(
-                title: Text("Country: Argentina"),
+                title: Text("País: Argentina"),
               ),
             ],
           ),
           ExpansionTile(
-            title: Text("Weber Haus"),
-            subtitle: Text("Cachaça"),
+            title: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("Weber Haus"),
+                Text("Cachaça"),
+              ],
+            ),
             children: [
               ListTile(
-                title: Text("38% alc"),
+                title: Text("Teor Alcoólico: 38%"),
               ),
               ListTile(
-                title: Text("Country: Brazil"),
+                title: Text("País: Brasil"),
               ),
             ],
           ),
