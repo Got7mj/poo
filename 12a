@@ -1,0 +1,94 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Cervejas com Detalhes',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: MyHomePage(),
+    );
+  }
+}
+
+class MyHomePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Cervejas com Detalhes'),
+      ),
+      body: ListView(
+        children: [
+          ExpansionTile(
+            title: Text("La Fin Du Monde"),
+            leading: Icon(Icons.local_drink),
+            children: [
+              ListTile(
+                title: Text("Álcool: 9%"),
+                subtitle: Text("País: Canadá"),
+              ),
+            ],
+          ),
+          ExpansionTile(
+            title: Text("Sapporo Premium"),
+            leading: Icon(Icons.local_drink),
+            children: [
+              ListTile(
+                title: Text("Álcool: 5%"),
+                subtitle: Text("País: Japão"),
+              ),
+            ],
+          ),
+          ExpansionTile(
+            title: Text("Duvel"),
+            leading: Icon(Icons.local_drink),
+            children: [
+              ListTile(
+                title: Text("Álcool: 8.5%"),
+                subtitle: Text("País: Bélgica"),
+              ),
+            ],
+          ),
+          // Adicionando mais cervejas
+          ExpansionTile(
+            title: Text("Heineken"),
+            leading: Icon(Icons.local_drink),
+            children: [
+              ListTile(
+                title: Text("Álcool: 5%"),
+                subtitle: Text("País: Holanda"),
+              ),
+            ],
+          ),
+          ExpansionTile(
+            title: Text("Guinness"),
+            leading: Icon(Icons.local_drink),
+            children: [
+              ListTile(
+                title: Text("Álcool: 4.2%"),
+                subtitle: Text("País: Irlanda"),
+              ),
+            ],
+          ),
+          ExpansionTile(
+            title: Text("Corona Extra"),
+            leading: Icon(Icons.local_drink),
+            children: [
+              ListTile(
+                title: Text("Álcool: 4.5%"),
+                subtitle: Text("País: México"),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
