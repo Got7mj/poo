@@ -8,10 +8,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Cervejas com Detalhes',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      title: 'Bebidas...',
+      theme: ThemeData(useMaterial3: false, primarySwatch: Colors.blue),
       home: MyHomePage(),
     );
   }
@@ -22,68 +20,55 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Cervejas com Detalhes'),
+        title: Text('Bebidas...'),
       ),
       body: ListView(
         children: [
           ExpansionTile(
             title: Text("La Fin Du Monde"),
-            leading: Icon(Icons.local_drink),
+            subtitle: Text("Beer"),
             children: [
               ListTile(
-                title: Text("Álcool: 9%"),
-                subtitle: Text("País: Canadá"),
+                title: Text("12% alc"),
+              ),
+              ListTile(
+                title: Text("Country: Canadá"),
               ),
             ],
           ),
           ExpansionTile(
             title: Text("Sapporo Premium"),
-            leading: Icon(Icons.local_drink),
+            subtitle: Text("Beer"),
             children: [
               ListTile(
-                title: Text("Álcool: 5%"),
-                subtitle: Text("País: Japão"),
+                title: Text("15% alc"),
+              ),
+              ListTile(
+                title: Text("Country: Japão"),
               ),
             ],
           ),
           ExpansionTile(
-            title: Text("Duvel"),
-            leading: Icon(Icons.local_drink),
+            title: Text("Partridge Reserva"),
+            subtitle: Text("Wine"),
             children: [
               ListTile(
-                title: Text("Álcool: 8.5%"),
-                subtitle: Text("País: Bélgica"),
+                title: Text("14% alc"),
               ),
-            ],
-          ),
-          // Adicionando mais cervejas
-          ExpansionTile(
-            title: Text("Heineken"),
-            leading: Icon(Icons.local_drink),
-            children: [
               ListTile(
-                title: Text("Álcool: 5%"),
-                subtitle: Text("País: Holanda"),
+                title: Text("Country: Argentina"),
               ),
             ],
           ),
           ExpansionTile(
-            title: Text("Guinness"),
-            leading: Icon(Icons.local_drink),
+            title: Text("Weber Haus"),
+            subtitle: Text("Cachaça"),
             children: [
               ListTile(
-                title: Text("Álcool: 4.2%"),
-                subtitle: Text("País: Irlanda"),
+                title: Text("38% alc"),
               ),
-            ],
-          ),
-          ExpansionTile(
-            title: Text("Corona Extra"),
-            leading: Icon(Icons.local_drink),
-            children: [
               ListTile(
-                title: Text("Álcool: 4.5%"),
-                subtitle: Text("País: México"),
+                title: Text("Country: Brazil"),
               ),
             ],
           ),
