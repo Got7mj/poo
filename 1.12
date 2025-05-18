@@ -8,10 +8,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Cervejas com Detalhes',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      title: 'Bebidas...',
+      theme: ThemeData(useMaterial3: false, primarySwatch: Colors.blue),
       home: MyHomePage(),
     );
   }
@@ -22,68 +20,75 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Cervejas com Detalhes'),
+        title: Text('Bebidas...'),
       ),
       body: ListView(
         children: [
           ExpansionTile(
-            title: Text("La Fin Du Monde"),
-            leading: Icon(Icons.local_drink),
+            title: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("La Fin Du Monde"),
+                Text("Beer"),
+              ],
+            ),
             children: [
               ListTile(
-                title: Text("Estilo: Bock"),
-                subtitle: Text("IBU: 65"),
+                title: Text("Teor Alcoólico: 12%"),
+              ),
+              ListTile(
+                title: Text("País: Canadá"),
               ),
             ],
           ),
           ExpansionTile(
-            title: Text("Sapporo Premium"),
-            leading: Icon(Icons.local_drink),
+            title: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("Sapporo Premium"),
+                Text("Beer"),
+              ],
+            ),
             children: [
               ListTile(
-                title: Text("Estilo: Sour Ale"),
-                subtitle: Text("IBU: 54"),
+                title: Text("Teor Alcoólico: 15%"),
+              ),
+              ListTile(
+                title: Text("País: Japão"),
               ),
             ],
           ),
           ExpansionTile(
-            title: Text("Duvel"),
-            leading: Icon(Icons.local_drink),
+            title: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("Partridge Reserva"),
+                Text("Wine"),
+              ],
+            ),
             children: [
               ListTile(
-                title: Text("Estilo: Pilsner"),
-                subtitle: Text("IBU: 82"),
+                title: Text("Teor Alcoólico: 14%"),
               ),
-            ],
-          ),
-          // Adicionando mais cervejas
-          ExpansionTile(
-            title: Text("Heineken"),
-            leading: Icon(Icons.local_drink),
-            children: [
               ListTile(
-                title: Text("Estilo: Lager"),
-                subtitle: Text("IBU: 23"),
+                title: Text("País: Argentina"),
               ),
             ],
           ),
           ExpansionTile(
-            title: Text("Guinness"),
-            leading: Icon(Icons.local_drink),
+            title: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("Weber Haus"),
+                Text("Cachaça"),
+              ],
+            ),
             children: [
               ListTile(
-                title: Text("Estilo: Stout"),
-                subtitle: Text("IBU: 45"),
+                title: Text("Teor Alcoólico: 38%"),
               ),
-            ],
-          ),
-          ExpansionTile(
-            title: Text("Corona Extra"),
-            leading: Icon(Icons.local_drink),
-            children: [
               ListTile(
-                title: Text("Estilo: Pale Lager"),
-                subtitle: Text("IBU: 19"),
+                title: Text("País: Brasil"),
               ),
             ],
           ),
