@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
 
-class CaixaDeIconesQueEuMesmoProgramei {
+class CaixaDeIconesQueEuMesmoProgramei extends StatelessWidget{
 
   CaixaDeIconesQueEuMesmoProgramei();
+
+}
 
 void main() {
 
