@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class NewNavBar extends StatelessWidget {
-  NewNavBar();
+  final List<Icon> icones;
+
+  NewNavBar({required this.icones});
 
   void botaoFoiTocado(int index) {
     print("Tocaram no botão $index");
@@ -11,20 +13,12 @@ class NewNavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return BottomNavigationBar(
       onTap: botaoFoiTocado,
-      items: const [
-        BottomNavigationBarItem(
-          label: "Cafés",
-          icon: Icon(Icons.coffee_outlined),
-        ),
-        BottomNavigationBarItem(
-          label: "Cervejas",
-          icon: Icon(Icons.local_drink_outlined),
-        ),
-        BottomNavigationBarItem(
-          label: "Nações",
-          icon: Icon(Icons.flag_outlined),
-        ),
-      ],
+      items: icones
+          .map((icone) => BottomNavigationBarItem(
+                icon: icone,
+                label: "",
+              ))
+          .toList(),
     );
   }
 }
@@ -48,7 +42,6 @@ class ListaDeDicas extends StatelessWidget {
   }
 }
 
-// Aqui criamos uma subclasse de AppBar
 class NewAppBar extends AppBar {
   NewAppBar()
       : super(
@@ -62,9 +55,15 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(useMaterial3: false, primarySwatch: Colors.deepPurple),
       home: Scaffold(
-        appBar: NewAppBar(), // Usando nossa nova AppBar customizada
+        appBar: NewAppBar(),
         body: ListaDeDicas(),
-        bottomNavigationBar: NewNavBar(),
+        bottomNavigationBar: NewNavBar(
+          icones: const [
+            Icon(Icons.coffee_outlined),
+            Icon(Icons.local_drink_outlined),
+            Icon(Icons.flag_outlined),
+          ],
+        ),
       ),
     );
   }
