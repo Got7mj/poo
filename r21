@@ -48,14 +48,21 @@ class ListaDeDicas extends StatelessWidget {
   }
 }
 
-// Nova classe MyApp que monta o MaterialApp com os widgets que criamos
+// Aqui criamos uma subclasse de AppBar
+class NewAppBar extends AppBar {
+  NewAppBar()
+      : super(
+          title: Text("Dicas"),
+        );
+}
+
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(useMaterial3: false, primarySwatch: Colors.deepPurple),
       home: Scaffold(
-        appBar: AppBar(title: Text("Dicas")),
+        appBar: NewAppBar(), // Usando nossa nova AppBar customizada
         body: ListaDeDicas(),
         bottomNavigationBar: NewNavBar(),
       ),
@@ -67,3 +74,4 @@ void main() {
   MyApp app = MyApp();
   runApp(app);
 }
+
