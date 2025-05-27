@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 
+
+class CaixaDeIconesQueEuMesmoProgramei {
+
+  CaixaDeIconesQueEuMesmoProgramei();
+
 void main() {
 
   MaterialApp app = MaterialApp(
