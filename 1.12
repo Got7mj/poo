@@ -24,76 +24,38 @@ class MyHomePage extends StatelessWidget {
       ),
       body: ListView(
         children: [
-          ExpansionTile(
-            title: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("La Fin Du Monde"),
-                Text("Beer"),
-              ],
-            ),
-            children: [
-              ListTile(
-                title: Text("Teor Alcoólico: 12%"),
-              ),
-              ListTile(
-                title: Text("País: Canadá"),
-              ),
-            ],
-          ),
-          ExpansionTile(
-            title: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("Sapporo Premium"),
-                Text("Beer"),
-              ],
-            ),
-            children: [
-              ListTile(
-                title: Text("Teor Alcoólico: 15%"),
-              ),
-              ListTile(
-                title: Text("País: Japão"),
-              ),
-            ],
-          ),
-          ExpansionTile(
-            title: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("Partridge Reserva"),
-                Text("Wine"),
-              ],
-            ),
-            children: [
-              ListTile(
-                title: Text("Teor Alcoólico: 14%"),
-              ),
-              ListTile(
-                title: Text("País: Argentina"),
-              ),
-            ],
-          ),
-          ExpansionTile(
-            title: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("Weber Haus"),
-                Text("Cachaça"),
-              ],
-            ),
-            children: [
-              ListTile(
-                title: Text("Teor Alcoólico: 38%"),
-              ),
-              ListTile(
-                title: Text("País: Brasil"),
-              ),
-            ],
-          ),
+          bebidaTile("La Fin Du Monde", "Beer", "12%", "Canadá"),
+          bebidaTile("Sapporo Premium", "Beer", "15%", "Japão"),
+          bebidaTile("Partridge Reserva", "Wine", "14%", "Argentina"),
+          bebidaTile("Weber Haus", "Cachaça", "38%", "Brasil"),
         ],
       ),
+    );
+  }
+ Widget bebidaTile(String nome, String tipo, String teor, String pais) {
+    return ExpansionTile(
+      title: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(nome),
+          Text(tipo),
+        ],
+      ),
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          child: Center(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text("Teor Alcoólico: $teor", style: TextStyle(fontSize: 16)),
+                SizedBox(height: 4),
+                Text("País: $pais", style: TextStyle(fontSize: 16)),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
