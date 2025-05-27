@@ -29,7 +29,6 @@ class NewNavBar extends StatelessWidget {
   }
 }
 
-
 class ListaDeDicas extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -49,15 +48,22 @@ class ListaDeDicas extends StatelessWidget {
   }
 }
 
-void main() {
-  MaterialApp app = MaterialApp(
-    theme: ThemeData(useMaterial3: false, primarySwatch: Colors.deepPurple),
-    home: Scaffold(
-      appBar: AppBar(title: Text("Dicas")),
-      body: ListaDeDicas(), // Aqui usamos o novo componente
-      bottomNavigationBar: NewNavBar(),
-    ),
-  );
+// Nova classe MyApp que monta o MaterialApp com os widgets que criamos
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      theme: ThemeData(useMaterial3: false, primarySwatch: Colors.deepPurple),
+      home: Scaffold(
+        appBar: AppBar(title: Text("Dicas")),
+        body: ListaDeDicas(),
+        bottomNavigationBar: NewNavBar(),
+      ),
+    );
+  }
+}
 
+void main() {
+  MyApp app = MyApp();
   runApp(app);
 }
