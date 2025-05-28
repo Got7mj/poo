@@ -17,6 +17,36 @@ var dataObjects = [
     "ibu": "82"
   },
   {
+    "name": "Bohemia",
+    "style": "Pilsen",
+    "ibu": "15"
+  },
+  {
+    "name": "Erdinger",
+    "style": "Weissbier",
+    "ibu": "13"
+  },
+  {
+    "name": "Colorado Appia",
+    "style": "Wheat Beer",
+    "ibu": "10"
+  },
+  {
+    "name": "Brooklyn Lager",
+    "style": "Amber Lager",
+    "ibu": "30"
+  },
+  {
+    "name": "Becks",
+    "style": "German Pilsner",
+    "ibu": "23"
+  },
+  {
+    "name": "Hoegaarden",
+    "style": "Witbier",
+    "ibu": "15"
+  },
+  {
     "name": "Heineken",
     "style": "Lager",
     "ibu": "23"
@@ -49,22 +79,20 @@ var dataObjects = [
 ];
 
 void main() {
-  MyApp app = MyApp();
-
-  runApp(app);
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(primarySwatch: Colors.deepPurple),
+      theme: ThemeData(useMaterial3: false,primarySwatch: Colors.deepPurple),
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-          title: const Text("Dicas"),
+          title: const Text("Cervejas"),
         ),
-        body: DataBodyWidget(objects: dataObjects),
+        body: MytileWidget(objects: dataObjects),
         bottomNavigationBar: NewNavBar(),
       ),
     );
@@ -72,8 +100,6 @@ class MyApp extends StatelessWidget {
 }
 
 class NewNavBar extends StatelessWidget {
-  NewNavBar();
-
   void botaoFoiTocado(int index) {
     print("Tocaram no botão $index");
   }
@@ -92,40 +118,24 @@ class NewNavBar extends StatelessWidget {
   }
 }
 
-class DataBodyWidget extends StatelessWidget {
-  final List objects;
-  DataBodyWidget({this.objects = const []});
+class MytileWidget extends StatelessWidget {
+  final List<Map<String, String>> objects;
+
+  MytileWidget({required this.objects});
 
   @override
   Widget build(BuildContext context) {
-    var columnNames = ["Nome", "Estilo", "IBU"],
-        propertyNames = ["name", "style", "ibu"];
-
-    return SingleChildScrollView(
-      scrollDirection: Axis.vertical,
-      child: DataTable(
-        columns: columnNames
-            .map(
-              (name) => DataColumn(
-                label: Expanded(
-                  child: Text(
-                    name,
-                    style: TextStyle(fontStyle: FontStyle.italic),
-                  ),
-                ),
-              ),
-            )
-            .toList(),
-        rows: objects
-            .map<DataRow>(
-              (obj) => DataRow(
-                cells: propertyNames
-                    .map<DataCell>((propName) => DataCell(Text(obj[propName])))
-                    .toList(),
-              ),
-            )
-            .toList(),
-      ),
+    return ListView.builder(
+      itemCount: objects.length,
+      itemBuilder: (context, index) {
+        final item = objects[index];
+        return ListTile(
+          leading: Icon(Icons.local_drink),
+          title: Text(item['name'] ?? ''),
+          subtitle: Text("Estilo: ${item['style']} • IBU: ${item['ibu']}"),
+        );
+      },
     );
   }
 }
+
