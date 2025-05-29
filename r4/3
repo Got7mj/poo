@@ -1,1 +1,140 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+// === DADOS EXEMPLO ===
+
+final beerData = [
+  {"name": "Skol", "style": "Pilsen", "ibu": "8"},
+  {"name": "Peroni Nastro Azzurro ", "style": "Lager", "ibu": "15"},
+  {"name": "Budweiser", "style": "American Lager", "ibu": "12"},
+];
+
+final coffeeData = [
+  {"brand": "Pilão", "type": "Robusta", "intensity": "Média"},
+  {"brand": "Bialetti", "type": "Arabica", "intensity": "Alta"},
+  {"brand": "Tim Hortons", "type": "Blend", "intensity": "Média"},
+];
+
+final countryData = [
+  {"pais": "Brasil", "capital": "Brasília", "populacao": "213 milhões"},
+  {"pais": "Italia", "capital": "Tóquio", "populacao": "126 milhões"},
+  {"pais": "Canadá", "capital": "Ottawa", "populacao": "38 milhões"},
+];
+
+// === APP RAIZ ===
+
+class MyApp extends StatefulWidget {
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  int currentIndex = 0;
+
+  void onNavBarTapped(int index) {
+    setState(() {
+      currentIndex = index;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // Alternância dos dados com base na aba ativa
+    late List<Map<String, dynamic>> currentData;
+    late List<String> columnNames;
+    late List<String> propertyNames;
+    late String title;
+
+    if (currentIndex == 0) {
+      currentData = coffeeData;
+      columnNames = ["Marca", "Tipo", "Intensidade"];
+      propertyNames = ["brand", "type", "intensity"];
+      title = "Cafés";
+    } else if (currentIndex == 1) {
+      currentData = beerData;
+      columnNames = ["Nome", "Estilo", "IBU"];
+      propertyNames = ["name", "style", "ibu"];
+      title = "Cervejas";
+    } else {
+      currentData = countryData;
+      columnNames = ["País", "Capital", "População"];
+      propertyNames = ["pais", "capital", "populacao"];
+      title = "Nações";
+    }
+
+    return MaterialApp(
+      theme: ThemeData(primarySwatch: Colors.deepPurple),
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        appBar: AppBar(title: Text(title)),
+        body: DataBodyWidget(
+          objects: currentData,
+          columnNames: columnNames,
+          propertyNames: propertyNames,
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: currentIndex,
+          onTap: onNavBarTapped,
+          items: const [
+            BottomNavigationBarItem(
+                icon: Icon(Icons.coffee_outlined), label: "Cafés"),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.local_drink_outlined), label: "Cervejas"),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.flag_outlined), label: "Nações"),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// === WIDGET GENÉRICO DE TABELA ===
+
+class DataBodyWidget extends StatelessWidget {
+  final List<Map<String, dynamic>> objects;
+  final List<String> columnNames;
+  final List<String> propertyNames;
+
+  DataBodyWidget({
+    required this.objects,
+    required this.columnNames,
+    required this.propertyNames,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      scrollDirection: Axis.vertical,
+      child: DataTable(
+        columns: columnNames
+            .map(
+              (name) => DataColumn(
+                label: Expanded(
+                  child: Text(
+                    name,
+                    style: TextStyle(fontStyle: FontStyle.italic),
+                  ),
+                ),
+              ),
+            )
+            .toList(),
+        rows: objects.map<DataRow>(
+          (obj) {
+            return DataRow(
+              cells: propertyNames.map<DataCell>((propName) {
+                return DataCell(
+                  Text(obj[propName]?.toString() ?? ''),
+                );
+              }).toList(),
+            );
+          },
+        ).toList(),
+      ),
+    );
+  }
+}
 
