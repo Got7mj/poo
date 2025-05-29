@@ -1,1 +1,160 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatefulWidget {
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  int currentIndex = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    print("no build da classe MyApp");
+
+    // Dados e colunas dinâmicas com base na aba ativa
+    late List<Map<String, dynamic>> currentData;
+    late List<String> columnNames;
+    late List<String> propertyNames;
+    late String title;
+
+    if (currentIndex == 0) {
+      title = "Cafés";
+      currentData = coffeeData;
+      columnNames = ["Marca", "Origem", "Tipo", "Intensidade"];
+      propertyNames = ["brand", "origin", "type", "intensity"];
+    } else if (currentIndex == 1) {
+      title = "Cervejas";
+      currentData = beerData;
+      columnNames = ["Nome", "Estilo", "IBU", "País"];
+      propertyNames = ["name", "style", "ibu", "pais"];
+    } else {
+      title = "Nações";
+      currentData = countryData;
+      columnNames = ["País", "Capital", "População"];
+      propertyNames = ["pais", "capital", "populacao"];
+    }
+
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(primarySwatch: Colors.deepPurple),
+      home: Scaffold(
+        appBar: AppBar(title: Text(title)),
+        body: DataTableWidget(
+          jsonObjects: currentData,
+          columnNames: columnNames,
+          propertyNames: propertyNames,
+        ),
+        bottomNavigationBar: NewNavBar2(
+          selectedIndex: currentIndex,
+          onItemSelected: (index) {
+            setState(() {
+              currentIndex = index;
+            });
+          },
+        ),
+      ),
+    );
+  }
+}
+
+// === BOTTOM NAVBAR COM STATEFULWIDGET ===
+
+class NewNavBar2 extends StatefulWidget {
+  final int selectedIndex;
+  final void Function(int) onItemSelected;
+
+  const NewNavBar2({
+    Key? key,
+    required this.selectedIndex,
+    required this.onItemSelected,
+  }) : super(key: key);
+
+  @override
+  _NewNavBar2State createState() => _NewNavBar2State();
+}
+
+class _NewNavBar2State extends State<NewNavBar2> {
+  @override
+  Widget build(BuildContext context) {
+    print("no build da classe NewNavBar2");
+
+    return BottomNavigationBar(
+      currentIndex: widget.selectedIndex,
+      onTap: widget.onItemSelected,
+      items: const [
+        BottomNavigationBarItem(
+          label: "Cafés",
+          icon: Icon(Icons.coffee_outlined),
+        ),
+        BottomNavigationBarItem(
+          label: "Cervejas",
+          icon: Icon(Icons.local_drink_outlined),
+        ),
+        BottomNavigationBarItem(
+          label: "Nações",
+          icon: Icon(Icons.flag_outlined),
+        ),
+      ],
+    );
+  }
+}
+
+// === TABELA GENÉRICA ===
+
+class DataTableWidget extends StatelessWidget {
+  final List<Map<String, dynamic>> jsonObjects;
+  final List<String> columnNames;
+  final List<String> propertyNames;
+
+  const DataTableWidget({
+    required this.jsonObjects,
+    required this.columnNames,
+    required this.propertyNames,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    print("no build da classe DataTableWidget");
+
+    return SingleChildScrollView(
+      child: DataTable(
+        columns: columnNames
+            .map(
+              (name) => DataColumn(
+                label: Text(
+                  name,
+                  style: const TextStyle(fontStyle: FontStyle.italic),
+                ),
+              ),
+            )
+            .toList(),
+        rows: jsonObjects
+            .map(
+              (obj) => DataRow(
+                cells: propertyNames
+                    .map((propName) => DataCell(Text(obj[propName]?.toString() ?? '')))
+                    .toList(),
+              ),
+            )
+            .toList(),
+      ),
+    );
+  }
+}
+
+// === DADOS ===
+
+final coffeeData = [
+  {"brand": "Pilão", "origin": "Brasil", "type": "Robusta", "intensity": "Média"},
+  {"brand": "Bialetti", "origin": "Itália", "type": "Arabica", "intensity": "Alta"},
+  {"brand": "Tim Hortons", "origin": "Canadá", "type": "Blend", "intensity": "Média"},
+];
+
+final beerData = [
+  {"name": "Skol", "style": "Pilsen", "ibu": "8",
 
