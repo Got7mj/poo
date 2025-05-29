@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class NewNavBar extends StatelessWidget {
   final List<Icon> icones;
 
+  
   NewNavBar({required this.icones});
 
   void botaoFoiTocado(int index) {
@@ -11,57 +12,72 @@ class NewNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final itens = icones
+        .map((icone) => BottomNavigationBarItem(
+              icon: icone,
+              label: "", // labels vazios conforme pedido
+            ))
+        .toList();
+
     return BottomNavigationBar(
       onTap: botaoFoiTocado,
-      items: icones
-          .map((icone) => BottomNavigationBarItem(
-                icon: icone,
-                label: "",
-              ))
-          .toList(),
+      items: itens,
     );
   }
 }
 
-class ListaDeDicas extends StatelessWidget {
+class DicasDeCervejas extends StatelessWidget {
+  const DicasDeCervejas();
+
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: [
+      children: const [
         Expanded(
-          child: Text("La Fin Du Monde - Bock - 65 ibu"),
+          child: Center(
+            child: Text("La Fin Du Monde - Bock - 65 ibu"),
+          ),
         ),
         Expanded(
-          child: Text("Sapporo Premiume - Sour Ale - 54 ibu"),
+          child: Center(
+            child: Text("Sapporo Premiume - Sour Ale - 54 ibu"),
+          ),
         ),
         Expanded(
-          child: Text("Duvel - Pilsner - 82 ibu"),
+          child: Center(
+            child: Text("Duvel - Pilsner - 82 ibu"),
+          ),
         ),
       ],
     );
   }
 }
 
-class NewAppBar extends AppBar {
-  NewAppBar()
+
+class MinhaAppBar extends AppBar {
+  MinhaAppBar({Key? key, required String titulo})
       : super(
-          title: Text("Dicas"),
+          key: key,
+          title: Text(titulo),
         );
 }
 
 class MyApp extends StatelessWidget {
+  MyApp();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(useMaterial3: false, primarySwatch: Colors.deepPurple),
+      theme: ThemeData(useMaterial3: false,primarySwatch: Colors.deepPurple),
       home: Scaffold(
-        appBar: NewAppBar(),
-        body: ListaDeDicas(),
+        appBar: MinhaAppBar(titulo: "Dicas"),
+        body: const DicasDeCervejas(),
         bottomNavigationBar: NewNavBar(
           icones: const [
             Icon(Icons.coffee_outlined),
             Icon(Icons.local_drink_outlined),
             Icon(Icons.flag_outlined),
+            Icon(Icons.star_outline),
           ],
         ),
       ),
