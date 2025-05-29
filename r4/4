@@ -1,0 +1,197 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+// === DADOS EXEMPLO ===
+
+final beerData = [
+  {"name": "Skol", "style": "Pilsen", "ibu": "8", "pais": "Brasil"},
+  {"name": "Peroni Nastro Azzurro", "style": "Lager", "ibu": "15", "pais": "Itália"},
+  {"name": "Budweiser", "style": "American Lager", "ibu": "12", "pais": "Estados Unidos"},
+];
+
+final coffeeData = [
+  {"brand": "Pilão", "origin": "Brasil", "type": "Robusta", "intensity": "Média"},
+  {"brand": "Bialetti", "origin": "Itália", "type": "Arabica", "intensity": "Alta"},
+  {"brand": "Tim Hortons", "origin": "Canadá", "type": "Blend", "intensity": "Média"},
+];
+
+final countryData = [
+  {"pais": "Brasil", "capital": "Brasília", "populacao": "213 milhões"},
+  {"pais": "Itália", "capital": "Roma", "populacao": "60 milhões"},
+  {"pais": "Canadá", "capital": "Ottawa", "populacao": "38 milhões"},
+];
+
+// === APP PRINCIPAL ===
+
+class MyApp extends StatefulWidget {
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  int currentIndex = 0;
+  bool showTable = true; // alterna entre tabela e tiles
+
+  void onNavBarTapped(int index) {
+    setState(() {
+      currentIndex = index;
+    });
+  }
+
+  void toggleView() {
+    setState(() {
+      showTable = !showTable;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    late List<Map<String, dynamic>> currentData;
+    late List<String> columnNames;
+    late List<String> propertyNames;
+    late String title;
+
+    if (currentIndex == 0) {
+      currentData = coffeeData;
+      columnNames = ["Marca", "Origem", "Tipo", "Intensidade"];
+      propertyNames = ["brand", "origin", "type", "intensity"];
+      title = "Cafés";
+    } else if (currentIndex == 1) {
+      currentData = beerData;
+      columnNames = ["Nome", "Estilo", "IBU", "País"];
+      propertyNames = ["name", "style", "ibu", "pais"];
+      title = "Cervejas";
+    } else {
+      currentData = countryData;
+      columnNames = ["País", "Capital", "População"];
+      propertyNames = ["pais", "capital", "populacao"];
+      title = "Nações";
+    }
+
+    return MaterialApp(
+      theme: ThemeData(primarySwatch: Colors.deepPurple),
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text(title),
+          actions: [
+            IconButton(
+              icon: Icon(showTable ? Icons.list : Icons.table_chart),
+              tooltip: showTable ? "Mostrar Tiles" : "Mostrar Tabela",
+              onPressed: toggleView,
+            ),
+          ],
+        ),
+        body: showTable
+            ? DataBodyWidget(
+                objects: currentData,
+                columnNames: columnNames,
+                propertyNames: propertyNames,
+              )
+            : MyTileWidget(
+                objects: currentData,
+                columnNames: columnNames,
+                propertyNames: propertyNames,
+              ),
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: currentIndex,
+          onTap: onNavBarTapped,
+          items: const [
+            BottomNavigationBarItem(
+                icon: Icon(Icons.coffee_outlined), label: "Cafés"),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.local_drink_outlined), label: "Cervejas"),
+            BottomNavigationBarItem(icon: Icon(Icons.flag_outlined), label: "Nações"),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// === WIDGET DE TABELA GENÉRICO ===
+
+class DataBodyWidget extends StatelessWidget {
+  final List<Map<String, dynamic>> objects;
+  final List<String> columnNames;
+  final List<String> propertyNames;
+
+  DataBodyWidget({
+    required this.objects,
+    required this.columnNames,
+    required this.propertyNames,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      scrollDirection: Axis.vertical,
+      child: DataTable(
+        columns: columnNames
+            .map(
+              (name) => DataColumn(
+                label: Expanded(
+                  child: Text(
+                    name,
+                    style: TextStyle(fontStyle: FontStyle.italic),
+                  ),
+                ),
+              ),
+            )
+            .toList(),
+        rows: objects.map<DataRow>((obj) {
+          return DataRow(
+            cells: propertyNames.map<DataCell>((propName) {
+              return DataCell(Text(obj[propName]?.toString() ?? ''));
+            }).toList(),
+          );
+        }).toList(),
+      ),
+    );
+  }
+}
+
+// === WIDGET DE LISTA (TILES) GENÉRICO ===
+
+class MyTileWidget extends StatelessWidget {
+  final List<Map<String, dynamic>> objects;
+  final List<String> columnNames;
+  final List<String> propertyNames;
+
+  MyTileWidget({
+    required this.objects,
+    required this.columnNames,
+    required this.propertyNames,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemCount: objects.length,
+      itemBuilder: (context, index) {
+        final obj = objects[index];
+        return Card(
+          margin: EdgeInsets.symmetric(vertical: 6, horizontal: 12),
+          child: ListTile(
+            title: Text(
+              obj[propertyNames[0]]?.toString() ?? '',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: List.generate(propertyNames.length - 1, (i) {
+                final propIndex = i + 1;
+                return Text(
+                  "${columnNames[propIndex]}: ${obj[propertyNames[propIndex]]?.toString() ?? ''}",
+                );
+              }),
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
