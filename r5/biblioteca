@@ -1,0 +1,3 @@
+//Adicione essa biblioteca ao seu projeto. No console, de dentro do diretório de seu projeto, escreva:
+
+flutter pub add flutter_hooks
