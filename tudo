@@ -1,0 +1,390 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart'; // receita5 adicionada
+
+void main() {
+  runApp(MyApp());
+}
+
+// ==================== Receita 1: Bebidas Expansion Tiles ====================
+
+class BebidasPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: MinhaAppBar(titulo: "Bebidas..."),
+      body: ListView(
+        children: [
+          bebidaTile("La Fin Du Monde", "Beer", "12%", "Canadá"),
+          bebidaTile("Sapporo Premium", "Beer", "15%", "Japão"),
+          bebidaTile("Partridge Reserva", "Wine", "14%", "Argentina"),
+          bebidaTile("Weber Haus", "Cachaça", "38%", "Brasil"),
+        ],
+      ),
+    );
+  }
+
+  Widget bebidaTile(String nome, String tipo, String teor, String pais) {
+    return ExpansionTile(
+      title: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(nome),
+          Text(tipo),
+        ],
+      ),
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          child: Center(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text("Teor Alcoólico: $teor", style: TextStyle(fontSize: 16)),
+                SizedBox(height: 4),
+                Text("País: $pais", style: TextStyle(fontSize: 16)),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class MinhaAppBar extends AppBar {
+  MinhaAppBar({Key? key, required String titulo})
+      : super(
+          key: key,
+          title: Text(titulo),
+        );
+}
+
+// ==================== Receita 2: NewNavBar dinâmico ====================
+
+class NewNavBar extends StatelessWidget {
+  final List<Icon> icones;
+
+  NewNavBar({required this.icones});
+
+  void botaoFoiTocado(int index) {
+    print("Tocaram no botão $index");
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final itens = icones
+        .map((icone) => BottomNavigationBarItem(
+              icon: icone,
+              label: "", // labels vazios conforme pedido
+            ))
+        .toList();
+
+    return BottomNavigationBar(
+      onTap: botaoFoiTocado,
+      items: itens,
+    );
+  }
+}
+
+// ==================== Receita 3: NewAppBar com PopupMenu e DataBodyWidget ====================
+
+class NewAppBar extends AppBar {
+  NewAppBar({Key? key})
+      : super(
+          key: key,
+          title: const Text("Dicas"),
+          actions: [
+            PopupMenuButton<String>(
+              icon: Icon(Icons.more_vert),
+              onSelected: (String value) {
+                print('Selecionou: $value');
+              },
+              itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+                PopupMenuItem<String>(
+                  value: "Vermelho",
+                  child: Text("Vermelho"),
+                ),
+                PopupMenuItem<String>(
+                  value: "Verde",
+                  child: Text("Verde"),
+                ),
+                PopupMenuItem<String>(
+                  value: "Azul",
+                  child: Text("Azul"),
+                ),
+              ],
+            ),
+          ],
+        );
+}
+
+class NewNavBar3 extends StatelessWidget {
+  final List<Icon> icons;
+
+  NewNavBar3({required this.icons});
+
+  void botaoFoiTocado(int index) {
+    print("Tocaram no botão $index");
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final items = icons
+        .map(
+          (icon) => BottomNavigationBarItem(
+            icon: icon,
+            label: '',
+          ),
+        )
+        .toList();
+
+    return BottomNavigationBar(
+      onTap: botaoFoiTocado,
+      items: items,
+    );
+  }
+}
+
+class DataBodyWidget extends StatelessWidget {
+  final List<String> objects;
+
+  DataBodyWidget({this.objects = const []});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: objects
+          .map(
+            (obj) => Expanded(
+              child: Center(child: Text(obj)),
+            ),
+          )
+          .toList(),
+    );
+  }
+}
+
+// ==================== Receita 4: App com Stateful, tabelas e tiles ====================
+
+// Dados usados no app
+final beerData = [
+  {"name": "Skol", "style": "Pilsen", "ibu": "8", "pais": "Brasil"},
+  {"name": "Peroni Nastro Azzurro", "style": "Lager", "ibu": "15", "pais": "Itália"},
+  {"name": "Budweiser", "style": "American Lager", "ibu": "12", "pais": "Estados Unidos"},
+];
+
+final coffeeData = [
+  {"brand": "Pilão", "origin": "Brasil", "type": "Robusta", "intensity": "Média"},
+  {"brand": "Bialetti", "origin": "Itália", "type": "Arabica", "intensity": "Alta"},
+  {"brand": "Tim Hortons", "origin": "Canadá", "type": "Blend", "intensity": "Média"},
+];
+
+final countryData = [
+  {"pais": "Brasil", "capital": "Brasília", "populacao": "213 milhões"},
+  {"pais": "Itália", "capital": "Roma", "populacao": "60 milhões"},
+  {"pais": "Canadá", "capital": "Ottawa", "populacao": "38 milhões"},
+];
+
+// Widget tabela genérica
+class DataTableWidgetV2 extends StatelessWidget {
+  final List<Map<String, dynamic>> objects;
+  final List<String> columnNames;
+  final List<String> propertyNames;
+
+  DataTableWidgetV2({
+    required this.objects,
+    required this.columnNames,
+    required this.propertyNames,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      scrollDirection: Axis.vertical,
+      child: DataTable(
+        columns: columnNames
+            .map(
+              (name) => DataColumn(
+                label: Expanded(
+                  child: Text(
+                    name,
+                    style: TextStyle(fontStyle: FontStyle.italic),
+                  ),
+                ),
+              ),
+            )
+            .toList(),
+        rows: objects.map<DataRow>((obj) {
+          return DataRow(
+            cells: propertyNames.map<DataCell>((propName) {
+              return DataCell(Text(obj[propName]?.toString() ?? ''));
+            }).toList(),
+          );
+        }).toList(),
+      ),
+    );
+  }
+}
+
+// Widget tiles genérica
+class MyTileWidget extends StatelessWidget {
+  final List<Map<String, dynamic>> objects;
+  final List<String> columnNames;
+  final List<String> propertyNames;
+
+  MyTileWidget({
+    required this.objects,
+    required this.columnNames,
+    required this.propertyNames,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemCount: objects.length,
+      itemBuilder: (context, index) {
+        final obj = objects[index];
+        return Card(
+          margin: EdgeInsets.symmetric(vertical: 6, horizontal: 12),
+          child: ListTile(
+            title: Text(
+              obj[propertyNames[0]]?.toString() ?? '',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: List.generate(propertyNames.length - 1, (i) {
+                final propIndex = i + 1;
+                return Text(
+                  "${columnNames[propIndex]}: ${obj[propertyNames[propIndex]]?.toString() ?? ''}",
+                );
+              }),
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+// ==================== Receita 5: App completo com Stateful NavBar e DataTable ====================
+
+class MyApp extends StatefulWidget {
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  int currentIndex = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    print("no build da classe MyApp");
+
+    // Dados e colunas dinâmicas com base na aba ativa
+    late List<Map<String, dynamic>> currentData;
+    late List<String> columnNames;
+    late List<String> propertyNames;
+    late String title;
+
+    if (currentIndex == 0) {
+      title = "Cafés";
+      currentData = coffeeData;
+      columnNames = ["Marca", "Origem", "Tipo", "Intensidade"];
+      propertyNames = ["brand", "origin", "type", "intensity"];
+    } else if (currentIndex == 1) {
+      title = "Cervejas";
+      currentData = beerData;
+      columnNames = ["Nome", "Estilo", "IBU", "País"];
+      propertyNames = ["name", "style", "ibu", "pais"];
+    } else {
+      title = "Nações";
+      currentData = countryData;
+      columnNames = ["País", "Capital", "População"];
+      propertyNames = ["pais", "capital", "populacao"];
+    }
+
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(primarySwatch: Colors.deepPurple),
+      home: Scaffold(
+        appBar: AppBar(title: Text(title)),
+        body: DataTableWidgetV2(
+          objects: currentData,
+          columnNames: columnNames,
+          propertyNames: propertyNames,
+        ),
+        bottomNavigationBar: NewNavBar2(
+          selectedIndex: currentIndex,
+          onItemSelected: (index) {
+            setState(() {
+              currentIndex = index;
+            });
+          },
+        ),
+      ),
+    );
+  }
+}
+
+// Stateful NavBar com callback
+class NewNavBar2 extends StatefulWidget {
+  final int selectedIndex;
+  final void Function(int) onItemSelected;
+
+  const NewNavBar2({
+    Key? key,
+    required this.selectedIndex,
+    required this.onItemSelected,
+  }) : super(key: key);
+
+  @override
+  _NewNavBar2State createState() => _NewNavBar2State();
+}
+
+class _NewNavBar2State extends State<NewNavBar2> {
+  @override
+  Widget build(BuildContext context) {
+    print("no build da classe NewNavBar2");
+
+    return BottomNavigationBar(
+      currentIndex: widget.selectedIndex,
+      onTap: widget.onItemSelected,
+      items: const [
+        BottomNavigationBarItem(
+          label: "Cafés",
+          icon: Icon(Icons.coffee_outlined),
+        ),
+        BottomNavigationBarItem(
+          label: "Cervejas",
+          icon: Icon(Icons.local_drink_outlined),
+        ),
+        BottomNavigationBarItem(
+          label: "Nações",
+          icon: Icon(Icons.flag_outlined),
+        ),
+      ],
+    );
+  }
+}
+
+// ==================== DADOS (repetidos para receita5) ====================
+
+final coffeeData = [
+  {"brand": "Pilão", "origin": "Brasil", "type": "Robusta", "intensity": "Média"},
+  {"brand": "Bialetti", "origin": "Itália", "type": "Arabica", "intensity": "Alta"},
+  {"brand": "Tim Hortons", "origin": "Canadá", "type": "Blend", "intensity": "Média"},
+];
+
+final beerData = [
+  {"name": "Skol", "style": "Pilsen", "ibu": "8", "pais": "Brasil"},
+  {"name": "Peroni Nastro Azzurro", "style": "Lager", "ibu": "15", "pais": "Itália"},
+  {"name": "Budweiser", "style": "American Lager", "ibu": "12", "pais": "Estados Unidos"},
+];
+
+final countryData = [
+  {"pais": "Brasil", "capital": "Brasília", "populacao": "213 milhões"},
+  {"pais": "Itália", "capital": "Roma", "populacao": "60 milhões"},
+  {"pais": "Canadá", "capital": "Ottawa", "populacao": "38 milhões"},
+];
+
