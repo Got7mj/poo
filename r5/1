@@ -156,5 +156,14 @@ final coffeeData = [
 ];
 
 final beerData = [
-  {"name": "Skol", "style": "Pilsen", "ibu": "8",
+  {"name": "Skol", "style": "Pilsen", "ibu": "8", "pais": "Brasil"},
+  {"name": "Peroni Nastro Azzurro", "style": "Lager", "ibu": "15", "pais": "Itália"},
+  {"name": "Budweiser", "style": "American Lager", "ibu": "12", "pais": "Estados Unidos"},
+];
+
+final countryData = [
+  {"pais": "Brasil", "capital": "Brasília", "populacao": "213 milhões"},
+  {"pais": "Itália", "capital": "Roma", "populacao": "60 milhões"},
+  {"pais": "Canadá", "capital": "Ottawa", "populacao": "38 milhões"},
+];
 
